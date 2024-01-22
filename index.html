@@ -8,7 +8,7 @@
     <script type="module">
       // Import WASM as ES module
       // Requires running the initialization function
-      import init, { f_safe } from './pkg/rust_wasm_ffi.js';
+      import init, { f_safe, Complex } from './pkg/rust_wasm_ffi.js';
 
       async function run() {
         // Initialize WASM
@@ -16,10 +16,16 @@
 
         // Expose the functions to the global window object
         window.f = f_safe;
+        window.Complex = Complex;
 
         // Use functionality defined in wasm.
         const result = f(1);
         console.log(`f(1) = ${result}`);
+
+        const a = new Complex(3, 2);
+        const b = new Complex(1, 4);
+        const sum = a.add(b);
+        console.log(`${a} + ${b} = ${sum}`)
       }
 
       run();
