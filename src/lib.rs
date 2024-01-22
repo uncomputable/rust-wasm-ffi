@@ -1,3 +1,5 @@
+mod bar;
+
 extern crate libc;
 
 use wasm_bindgen::prelude::*;
