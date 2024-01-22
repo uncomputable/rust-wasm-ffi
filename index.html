@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type"/>
+  </head>
+  <body>
+    <!-- Note the usage of `type=module` here as this is an ES6 module -->
+    <script type="module">
+      // Import WASM as ES module
+      // Requires running the initialization function
+      import init, { f_safe } from './pkg/rust_wasm_ffi.js';
+
+      async function run() {
+        // Initialize WASM
+        await init();
+
+        // Expose the functions to the global window object
+        window.f = f_safe;
+
+        // Use functionality defined in wasm.
+        const result = f(1);
+        console.log(`f(1) = ${result}`);
+      }
+
+      run();
+    </script>
+  </body>
+</html>
