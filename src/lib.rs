@@ -4,6 +4,9 @@ extern crate libc;
 
 use wasm_bindgen::prelude::*;
 
+#[cfg(test)]
+wasm_bindgen_test::wasm_bindgen_test_configure!(run_in_browser);
+
 extern "C" {
     fn f(x: i32) -> i32;
 }
@@ -31,9 +34,7 @@ pub fn f_safe(x: i32) -> i32 {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use wasm_bindgen_test::*;
-
-    wasm_bindgen_test_configure!(run_in_browser);
+    use wasm_bindgen_test::wasm_bindgen_test;
 
     #[test]
     #[wasm_bindgen_test]
