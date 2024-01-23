@@ -1,4 +1,4 @@
-mod bar;
+pub mod bar;
 
 extern crate libc;
 

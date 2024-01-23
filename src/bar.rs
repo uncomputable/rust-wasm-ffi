@@ -4,7 +4,7 @@ use wasm_bindgen::prelude::*;
 #[wasm_bindgen]
 #[repr(C)]
 #[derive(Debug, Copy, Clone, Default, Eq, PartialEq)]
-struct Complex {
+pub struct Complex {
     real: i32,
     im: i32
 }
@@ -64,6 +64,7 @@ impl Complex {
         ok.then_some(result)
     }
 
+    #[allow(clippy::wrong_self_convention)]
     #[wasm_bindgen(js_name = toString)]
     pub fn to_string_js(&self) -> String {
         self.to_string()
