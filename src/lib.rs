@@ -1,4 +1,5 @@
 pub mod bar;
+pub mod foo;
 
 extern crate libc;
 
@@ -6,10 +7,6 @@ use wasm_bindgen::prelude::*;
 
 #[cfg(test)]
 wasm_bindgen_test::wasm_bindgen_test_configure!(run_in_browser);
-
-extern "C" {
-    fn f(x: i32) -> i32;
-}
 
 // Called when the wasm module is instantiated
 #[wasm_bindgen(start)]
@@ -24,23 +21,4 @@ fn start() -> Result<(), JsValue> {
     body.append_child(&val)?;
 
     Ok(())
-}
-
-#[wasm_bindgen]
-pub fn f_safe(x: i32) -> i32 {
-    unsafe { f(x) }
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-    use wasm_bindgen_test::wasm_bindgen_test;
-
-    #[test]
-    #[wasm_bindgen_test]
-    fn test_f_safe() {
-        for x in 0..10 {
-            assert_eq!(f_safe(x), x + 1);
-        }
-    }
 }
