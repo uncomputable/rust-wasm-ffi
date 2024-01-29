@@ -5,24 +5,12 @@ typedef struct complex {
     int im;
 } complex;
 
-bool checked_add(int a, int b, int* result) {
-    int tmp = a + b;
-    if (tmp < a) {
-        return false; // Overflow
-    } else {
-        *result = tmp;
-        return true;
-    }
+static inline bool checked_add(int a, int b, int* result) {
+    return !__builtin_add_overflow(a, b, result);
 }
 
-bool checked_sub(int a, int b, int* result) {
-    int tmp = a - b;
-    if (tmp > a) {
-        return false; // Underflow
-    } else {
-        *result = tmp;
-        return true;
-    }
+static inline bool checked_sub(int a, int b, int* result) {
+    return !__builtin_sub_overflow(a, b, result);
 }
 
 bool add(complex* a, complex* b, complex* result) {
