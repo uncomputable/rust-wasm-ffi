@@ -13,8 +13,18 @@ static inline bool checked_sub(int a, int b, int* result) {
     return !__builtin_sub_overflow(a, b, result);
 }
 
+// Functions that don't occur in Rust FFI may take structs by value
+complex add_helper(complex a, complex b, bool* success) {
+    complex ret;
+    *success = checked_add(a.real, b.real, &ret.real) && checked_add(a.im, b.im, &ret.im);
+    return ret;
+}
+
+// Functions that occur in Rust FFI must take structs by reference
 bool add(complex* a, complex* b, complex* result) {
-    return checked_add(a->real, b->real, &result->real) && checked_add(a->im, b->im, &result->im);
+    bool success;
+    *result = add_helper(*a, *b, &success);
+    return success;
 }
 
 bool sub(complex* a, complex* b, complex* result) {
